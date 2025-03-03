@@ -1,13 +1,19 @@
-<div class="pagination">
-    <span class="step-links">
-      {% if page.has_previous %}
-        <a href="?page={{ page.previous_page_number }}">Previous</a>
-      {% endif %}
-      <span class="current">
-        Page {{ page.number }} of {{ page.paginator.num_pages }}.
-      </span>
-      {% if page.has_next %}
-        <a href="?page={{ page.next_page_number }}">Next</a>
-      {% endif %}
+<div class="pagination mt-6">
+  <div class="flex justify-between items-center">
+    {% if page.has_previous %}
+      <a href="?page={{ page.previous_page_number }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+        Previous
+      </a>
+    {% endif %}
+
+    <span class="text-gray-700">
+      Page {{ page.number }} of {{ page.paginator.num_pages }}.
     </span>
+
+    {% if page.has_next %}
+      <a href="?page={{ page.next_page_number }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+        Next
+      </a>
+    {% endif %}
+  </div>
 </div>

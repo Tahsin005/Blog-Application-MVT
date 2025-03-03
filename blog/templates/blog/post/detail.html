@@ -1,40 +1,72 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
 {% block title %}{{ post.title }}{% endblock %}
-{% block content %}
-    <h1>{{ post.title }}</h1>
-    <p class="date">
-        Published {{ post.publish }} by {{ post.author }}
-    </p>
-    {{ post.body|markdown }}
-    <p>
-        <a href="{% url "blog:post_share" post.id %}">
-        Share this post</a>
-    </p>
 
-    <h2>Similar posts</h2>
-    {% for post in similar_posts %}
-        <p>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+{% block content %}
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Post Title -->
+        <h1 class="text-3xl font-bold text-gray-800">{{ post.title }}</h1>
+
+        <!-- Post Metadata -->
+        <p class="text-sm text-gray-500 mt-2">
+            Published <span class="font-medium">{{ post.publish }}</span> by <span class="font-medium">{{ post.author }}</span>
         </p>
-    {% empty %}
-        There are no similar posts yet.
-    {% endfor %}
-    {% with comments.count as total_comments %}
-        <h2>
-            {{ total_comments }} comment{{ total_comments|pluralize }}
-        </h2>
-    {% endwith %}
-    {% for comment in comments %}
-        <div class="comment">
-            <p class="info">
-                Comment {{ forloop.counter }} by {{ comment.name }}
-                {{ comment.created }}
-            </p>
-                {{ comment.body|linebreaks }}
+
+        <!-- Post Content -->
+        <div class="prose max-w-none mt-6">
+            {{ post.body|markdown }}
         </div>
-    {% empty %}
-        <p>There are no comments.</p>
-    {% endfor %}
-    {% include "blog/post/includes/comment_form.html" %}
+
+        <!-- Share Button -->
+        <p class="mt-6">
+            <a href="{% url "blog:post_share" post.id %}"
+               class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Share this post
+            </a>
+        </p>
+
+        <!-- Similar Posts -->
+        <div class="mt-10">
+            <h2 class="text-2xl font-semibold text-gray-700">Similar posts</h2>
+            <ul class="mt-4 space-y-2">
+                {% for post in similar_posts %}
+                    <li>
+                        <a href="{{ post.get_absolute_url }}" class="text-blue-600 hover:underline">
+                            {{ post.title }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <p class="text-gray-500">There are no similar posts yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="mt-10">
+            {% with comments.count as total_comments %}
+                <h2 class="text-2xl font-semibold text-gray-700">
+                    {{ total_comments }} comment{{ total_comments|pluralize }}
+                </h2>
+            {% endwith %}
+
+            <div class="mt-6 space-y-6">
+                {% for comment in comments %}
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">
+                            Comment {{ forloop.counter }} by <span class="font-medium">{{ comment.name }}</span>
+                            on {{ comment.created }}
+                        </p>
+                        <p class="mt-2 text-gray-800">{{ comment.body|linebreaks }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-gray-500">There are no comments.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="mt-10">
+            {% include "blog/post/includes/comment_form.html" %}
+        </div>
+    </div>
 {% endblock %}

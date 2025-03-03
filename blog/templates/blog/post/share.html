@@ -4,16 +4,80 @@
 
 {% block content %}
   {% if sent %}
-    <h1>E-mail successfully sent</h1>
-    <p>
-      "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
-    </p>
+    <div class="bg-green-100 border-t-4 border-green-500 text-green-700 p-6 mb-6 rounded-lg">
+      <h1 class="text-2xl font-semibold">E-mail successfully sent</h1>
+      <p class="mt-2">
+        "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
+      </p>
+      <p class="mt-4">
+        <a href="{{ post.get_absolute_url }}" class="text-blue-500 hover:text-blue-700">
+          Back to the post
+        </a>
+      </p>
+    </div>
   {% else %}
-    <h1>Share "{{ post.title }}" by e-mail</h1>
-    <form method="post" novalidate>
-      {{ form.as_p }}
-      {% csrf_token %}
-      <input type="submit" value="Send e-mail">
-    </form>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h1 class="text-2xl font-semibold mb-4">Share "{{ post.title }}" by e-mail</h1>
+      <form method="post" novalidate class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Name Field -->
+        <div class="space-y-2">
+          <label for="id_name" class="block text-sm font-medium text-gray-700">Your Name</label>
+          {{ form.name }}
+          {% if form.name.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="space-y-2">
+          <label for="id_email" class="block text-sm font-medium text-gray-700">Your E-mail</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.email.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- To Email Field -->
+        <div class="space-y-2">
+          <label for="id_to" class="block text-sm font-medium text-gray-700">Recipient's E-mail</label>
+          {{ form.to }}
+          {% if form.to.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.to.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Comments Field -->
+        <div class="space-y-2">
+          <label for="id_comments" class="block text-sm font-medium text-gray-700">Message</label>
+          {{ form.comments }}
+          {% if form.comments.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.comments.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="space-y-2">
+          <input type="submit" value="Send e-mail" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300">
+        </div>
+      </form>
+    </div>
   {% endif %}
 {% endblock %}
