@@ -26,6 +26,11 @@ SECRET_KEY = 'django-insecure-)sy7xth)u12x8gzuhjgef$ic+@lq1ie9c^t^%v%cfa&fpugj&n
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    'https://tahsin-exe.onrender.com/blog/',
+    'https://*.127.0.0.1',
+    'http://127.0.0.1:5500',
+]
 
 from decouple import config
 
