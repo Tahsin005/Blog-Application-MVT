@@ -85,10 +85,11 @@ WSGI_APPLICATION = 'blog_application.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
+        'NAME': 'railway',
+        'USER': 'postgres',
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
+        'HOST': 'centerbeam.proxy.rlwy.net',
+        'PORT': '12006',
     }
 }
 
