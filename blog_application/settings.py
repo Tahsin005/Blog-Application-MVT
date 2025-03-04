@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
+    'https://tahsin-exe.onrender.com',
     'https://tahsin-exe.onrender.com/blog/',
     'https://*.127.0.0.1',
     'http://127.0.0.1:5500',
