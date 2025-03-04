@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)sy7xth)u12x8gzuhjgef$ic+@lq1ie9c^t^%v%cfa&fpugj&n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 from decouple import config
 
